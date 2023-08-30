@@ -30,7 +30,7 @@ const displayPhones = (phones) =>{
                   <h2 class="card-title">${phone.phone_name}</h2>
                   <p>If a dog chews shoes whose shoes does he choose?</p>
                   <div class="card-actions">
-                    <button class="btn btn-primary">Show All</button>
+                    <button onclick = "showDetailsBtn('${phone.slug}');my_modal_5.showModal()" class="btn btn-primary">Show Details</button>
                   </div>
                 </div>
         `;
@@ -58,6 +58,29 @@ const loading = (isLoading) =>{
     }
 
 }
+const showDetailsBtn = async (id) =>{
+    const response = await fetch(` https://openapi.programming-hero.com/api/phone/${id}`);
+    const data = await response.json();
+    const phoneDetails = data.data;
+     console.log(phoneDetails)
+    phoneDetailsInformation(phoneDetails)
+}
+
+const phoneDetailsInformation = (phoneDetails) =>{
+    const phoneTittles = document.getElementById('phone-tittles');
+    phoneTittles.innerText = phoneDetails.name;
+
+    const modalContainer = document.getElementById('modal-container');
+    modalContainer.innerHTML = `
+    <img class= "text-center mx-auto" src =" ${phoneDetails.image}"/>
+    `
+
+    my_modal_5.showModal();
+
+
+  
+}
+
 
 // loadPhone()
 
